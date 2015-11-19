@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Helpers\Steam\Schema as SteamSchema;
+use App\Helpers\Steam\APIBridge as SteamSchema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(SteamSchema::class, function ($app) {
-            return new SteamSchema(config('steam-auth.api_key'));
+            return new SteamSchema(config('steam-api.api_key'));
         });
     }
 }

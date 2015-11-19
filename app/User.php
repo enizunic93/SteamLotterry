@@ -40,8 +40,8 @@ class User extends Model implements AuthenticatableContract,
     /**
      * Get all of the tasks for the user.
      */
-    public function tasks()
+    public function games()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Game::class);
     }
 }

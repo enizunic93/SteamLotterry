@@ -7,10 +7,10 @@ use Mockery\CountValidator\Exception;
 use SebastianBergmann\GlobalState\RuntimeException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class Schema
+class APIBridge
 {
     protected $apiURL = 'http://api.steampowered.com/';
-    protected $communityURL = 'http://anonymouse.org/cgi-bin/anon-www.cgi/http://steamcommunity.com/';
+    protected $communityURL = 'http://steamcommunity.com/';
 
     protected $apiKey;
 
@@ -22,7 +22,7 @@ class Schema
         $this->apiKey = $apiKey;
     }
 
-    protected function callApi($category = '', $method, array $params)
+    public function callApi($category = '', $method, array $params)
     {
         $params['key'] = $this->apiKey;
 
@@ -134,22 +134,22 @@ class Schema
                     }
                     break;
                 case '>':
-                    if (!($response > $filter['value'])) {
+                    if ($response <= $filter['value']) {
                         return false;
                     }
                     break;
                 case '>=':
-                    if (!($response >= $filter['value'])) {
+                    if ($response < $filter['value']) {
                         return false;
                     }
                     break;
                 case '<':
-                    if (!($response < $filter['value'])) {
+                    if ($response >= $filter['value']) {
                         return false;
                     }
                     break;
                 case '<=':
-                    if (!($response <= $filter['value'])) {
+                    if ($response > $filter['value']) {
                         return false;
                     }
                     break;
@@ -208,27 +208,14 @@ class Schema
                     $item->setMedianPrice($prices['median_price']);
                     $item->setMarketVolume($prices['volume']);
                 } catch (NotFoundHttpException $ex) {
-                    Log::alert('Невозможно получить цены для предмета ' . $item->getMarketName());
+                    if($item->isTradable())
+                        Log::alert('Невозможно получить цены для предмета ' . $item->getMarketName());
                 }
 
                 $result[] = $item;
             } catch (\InvalidArgumentException $e) {
                 Log::emergency($e->getMessage(), ['appid' => $appId, 'itemName' => $info['name']]);
             }
-//
-//
-//            try {
-//                $prices = $this->getItemPrices($item->getAppId(), 5, $item->getMarketName());
-//            } catch (NotFoundHttpException $ex) {
-//            }
-//
-//            $lowest = (isset($prices['lowest_price'])) ? $prices['lowest_price'] : 0;
-//            $median = (isset($prices['median_price'])) ? $prices['median_price'] : 0;
-//
-//            $lowest = str_replace(',', '.', $lowest);
-//            $median = str_replace(',', '.', $median);
-//
-//            $item->setPrices($lowest, $median);
         }
 
         return $result;

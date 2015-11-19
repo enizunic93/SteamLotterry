@@ -179,7 +179,7 @@ abstract class Item
      * @param $price float|string|int
      */
     public function setMinPrice($price) {
-//        $price = (float) $price;
+        $price = (float) $price;
         $this->medianPrice = $price;
     }
 
@@ -191,7 +191,7 @@ abstract class Item
     }
 
     public function setMedianPrice($price) {
-//        $price = (float) $price;
+        $price = (float) $price;
         $this->medianPrice = $price;
     }
 
@@ -199,7 +199,7 @@ abstract class Item
      * @param $val int|string
      */
     public function setMarketVolume($val) {
-//        $val = (int) $val;
+        $val = (int) $val;
         $this->marketVolume = $val;
     }
 
@@ -362,7 +362,7 @@ abstract class Item
         return 0;
     }
 
-    static public function sortByQuality($qualityA, $qualityB) {
+    static public function sortByQuality($a, $b) {
         return 0;
     }
 

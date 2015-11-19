@@ -1,7 +1,8 @@
 <?php
 namespace App\Helpers\Steam;
 
-class DotaItem extends Item {
+class DotaItem extends Item
+{
     protected $appId = 570;
 
     protected static $dotaRaritiesEnum = [
@@ -46,13 +47,32 @@ class DotaItem extends Item {
         'Favored',
     ];
 
-    private static function getHeroes() {
+    private static $_heroes = [];
 
+    public static function getHeroes()
+    {
+        if (empty(self::$_heroes)) {
+            $api = new APIBridge(config('steam-auth.api_key'));
+
+            $json = $api->callApi('IEconDOTA2_570/', 'GetHeroes/v0001/', [
+                'language' => 'russian'
+            ]);
+
+            $result = json_decode($json, true);
+
+            $heroes = $result['result']['heroes'];
+
+            self::$_heroes = $heroes;
+        }
+
+        return self::$_heroes;
     }
 
     private $rarity;
+    private $quality;
 
-    public function __construct(array $data, array $additional) {
+    public function __construct(array $data, array $additional)
+    {
         parent::__construct($data, $additional);
 
         foreach ($this->tags as $tag) {
@@ -60,6 +80,8 @@ class DotaItem extends Item {
                 $this->rarity = strtolower($tag['name']);
             } elseif (strtolower($tag['category']) == 'hero') {
                 $this->characters[] = $tag['name'];
+            } elseif (strtolower($tag['category']) == 'quality') {
+                $this->quality = $tag['name'];
             }
         }
     }
@@ -69,15 +91,18 @@ class DotaItem extends Item {
         return $this->rarity;
     }
 
-    public function getHero() {
+    public function getHero()
+    {
         return $this->characters[0];
     }
 
-    private function getRarityOrder() {
+    private function getRarityOrder()
+    {
         return self::$dotaRaritiesEnum[$this->getRarity()];
     }
 
-    private static function checkBeforeSort($a, $b) {
+    private static function checkBeforeSort($a, $b)
+    {
         $badType = false;
 
         if (!($a instanceof DotaItem))
@@ -85,15 +110,26 @@ class DotaItem extends Item {
         if (!($b instanceof DotaItem))
             $badType = gettype($b);
 
-        if($badType)
+        if ($badType)
             throw new \RuntimeException('Incompatible types. Excepted: ' . self::class . '. Got: ' . $badType);
     }
 
-    public static function sortByQuality($qualityA, $qualityB)
+    /**
+     * @param $a DotaItem
+     * @param $b DotaItem
+     * @return int
+     */
+    public static function sortByQuality($a, $b)
     {
-        static::checkBeforeSort($qualityA, $qualityB);
+        static::checkBeforeSort($a, $b);
 
-        return 0;
+        $al = (!isset(self::$dotaQualitiesEnum[$a->getQuality()])) ? 0 : self::$dotaQualitiesEnum[$a->getHero()];
+        $bl = (!isset(self::$dotaQualitiesEnum[$b->getQuality()])) ? 0 : self::$dotaQualitiesEnum[$b->getHero()];
+
+        if ($al == $bl)
+            return 0;
+
+        return ($al > $bl) ? -1 : 1;
     }
 
     /**
@@ -116,9 +152,33 @@ class DotaItem extends Item {
         return ($al > $bl) ? -1 : 1;
     }
 
+    /**
+     * @param $a DotaItem
+     * @param $b DotaItem
+     * @return int
+     */
     public static function sortByCharacter($a, $b)
     {
-        return 0;
+        static::checkBeforeSort($a, $b);
+
+        $al = $bl = 0;
+
+        foreach (self::getHeroes() as $hero) {
+            if ($hero['localized_name'] == $a->getHero())
+                $al = true;
+            elseif ($hero['localized_name'] == $b->getHero())
+                $bl = true;
+        }
+
+        if (!$al) {
+            return 1;
+        }
+
+        if (!$bl) {
+            return -1;
+        }
+
+        return strnatcmp($a->getHero(), $b->getHero());
     }
 
     /**
@@ -156,8 +216,22 @@ class DotaItem extends Item {
             return 0;
         }
 
-        // От эншнта к камонке, DESC кароче
-
         return ($al > $bl) ? -1 : 1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+
+    /**
+     * @param mixed $quality
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
     }
 }

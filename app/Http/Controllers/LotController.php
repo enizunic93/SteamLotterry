@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Steam\DotaItem;
 use App\Helpers\Steam\Item;
 use App\Helpers\Steam\ItemStorage;
 use App\Lot;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use App\Helpers\Steam\Schema as SteamSchema;
+use App\Helpers\Steam\APIBridge as SteamAPI;
 use Illuminate\Support\Facades\Config;
 
 class LotController extends Controller
@@ -27,17 +28,17 @@ class LotController extends Controller
     /**
      * The Steam schema instance
      *
-     * @var SteamSchema
+     * @var SteamAPI
      */
     protected $steamSchema;
 
     /**
      * @param LotRepository $lots
-     * @param SteamSchema $steamSchema
+     * @param SteamAPI $steamSchema
      */
-    public function __construct(LotRepository $lots, SteamSchema $steamSchema)
+    public function __construct(LotRepository $lots, SteamAPI $steamSchema)
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
 
         $this->lots = $lots;
         $this->steamSchema = $steamSchema;
@@ -53,12 +54,13 @@ class LotController extends Controller
     {
         //TODO::
 
-        $inventory = $this->steamSchema->getPlayerInventory(570, 2, $request->user()->steam_id, [
+        $inventory = $this->steamSchema
+		->getPlayerInventory(570, 2, $request->user()->steam_id, [
             'where' => [
                 ['key' => 'isTradable', 'operand' => '=', 'value' => true]
             ]
         ]);
-       // usort($inventory, [ItemStorage::getItemClass(570), 'sortByPrice']);
+        usort($inventory, [ItemStorage::getItemClass(570), 'sortByCharacter']);
 //
 //        $total = $this->steamSchema->getTotalPriceOfInventory($inventory);
 
@@ -66,8 +68,6 @@ class LotController extends Controller
             'lots' => Lot::all(),
             'inventory' => $inventory,
             'item_class' => ItemStorage::getItemClass(570)
-//            'player_items' => $inventory,
-//            'total' => $total
         ]);
     }
 
@@ -86,23 +86,6 @@ class LotController extends Controller
         $request->user()->tasks()->create([
             'name' => $request->name,
         ]);
-
-        return redirect('/tasks');
-    }
-
-    /**
-     * Destroy the given task.
-     *
-     * @param  Request $request
-     * @param  Task $task
-     * @return Response
-     */
-    public function destroy(Request $request, Task $task)
-    {
-        // Кек Policies/TaskPolicy
-        $this->authorize('destroy', $task);
-
-        $task->delete();
 
         return redirect('/tasks');
     }

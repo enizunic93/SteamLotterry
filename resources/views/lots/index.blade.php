@@ -6,7 +6,7 @@
         <!-- Display Validation Errors -->
         @include('common.errors')
 
-        <!-- New Task Form -->
+                <!-- New Task Form -->
         <form action="/task" method="POST" class="form-horizontal">
             {{ csrf_field() }}
 
@@ -31,23 +31,46 @@
     </div>
 
     @if (isset($inventory))
-            <h2>Шмот</h2>
-            <hr>
-            <table class="table table-responsive table-bordered">
-                <thead>
-                <tr>
-                    <th>Вещь:</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($inventory as $item)
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Твой шмот из дотана</h2>
+                <table class="table table-responsive table-bordered">
+                    <thead>
                     <tr>
-                        <td>
-                            {{ dump($item) }}
-                        </td>
+                        <th>Имя:</th>
+                        <th>Пикча:</th>
+                        <th>Торгуется:</th>
+                        <th>Цена:</th>
+                        <th>Тип:</th>
+                        <th>Герой:</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach ($inventory as $item)
+                        <tr>
+                            <td>{{ $item->getName() }}</td>
+                            <td><img src="{{ $item->getClearUrl() }}200fx200f" alt=""></td>
+                            <td>
+                                @if ($item->isTradable())
+                                    Да
+                                @else
+                                    Нет
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->getLotPrice() > 0)
+                                    {{ $item->getLotPrice() }} руб
+                                @else
+                                    Бесценно
+                                @endif
+                            </td>
+                            <td>{{ $item->getType() }}</td>
+                            <td>{{ $item->getHero() }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     @endif
 @endsection

@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'accepted'             => 'The :attribute must be accepted.',
-    'active_url'           => 'The :attribute is not a valid URL.',
-    'after'                => 'The :attribute must be a date after :date.',
-    'alpha'                => 'The :attribute may only contain letters.',
-    'alpha_dash'           => 'The :attribute may only contain letters, numbers, and dashes.',
+    'accepted'             => 'Аттрибут :attribute должен быть отправлен.',
+    'active_url'           => 'Аттрибут :attribute это плохой URL.',
+    'after'                => 'Аттрибут :attribute должен быть датой после :date.',
+    'alpha'                => 'Аттрибут :attribute может содержать только буквы.',
+    'alpha_dash'           => 'Аттрибут :attribute может содержать только буквы, цифры и знак нижнего подчёркивания.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
     'array'                => 'The :attribute must be an array.',
     'before'               => 'The :attribute must be a date before :date.',
