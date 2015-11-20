@@ -28,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+        }
+
         $this->app->bind(SteamSchema::class, function ($app) {
             return new SteamSchema(config('steam-api.api_key'));
         });

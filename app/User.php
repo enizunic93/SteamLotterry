@@ -1,7 +1,11 @@
 <?php
-
+/**
+ * Класс должен находиться ЗДЕСЬ, И ТОЛЬКО ЗДЕСЬ!
+ * Потому что это СИСТЕМНЫЙ, МАТЬ ЕГО, КЛАСС)))
+ **/
 namespace App;
 
+use App\Models\SteamItem;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -40,8 +44,8 @@ class User extends Model implements AuthenticatableContract,
     /**
      * Get all of the tasks for the user.
      */
-    public function games()
+    public function tasks()
     {
-        return $this->hasMany(Game::class);
+        return $this->hasMany(SteamItem::class);
     }
 }

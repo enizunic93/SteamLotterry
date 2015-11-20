@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Steam\DotaItem;
 use App\Helpers\Steam\Item;
 use App\Helpers\Steam\ItemStorage;
-use App\Lot;
+use App\Models\Lot;
 use App\Repositories\LotRepository;
 use Illuminate\Http\Request;
 
