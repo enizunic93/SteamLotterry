@@ -15,4 +15,15 @@ class ItemStorage {
 
         return self::$relations[$appId];
     }
+
+    public static function getItemContextID($appId) {
+        $className = self::getItemClass($appId);
+        $prop = 'contextId';
+
+        if(!property_exists($className, $prop))
+            throw new \RuntimeException('У предмета ' . $className . ' не указан ContextID! Исправьте это скорее!');
+
+        $vars = get_class_vars($className);
+        return $vars[$prop];
+    }
 }

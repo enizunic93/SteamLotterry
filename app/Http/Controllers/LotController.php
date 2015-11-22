@@ -7,6 +7,7 @@ use App\Helpers\Steam\Item;
 use App\Helpers\Steam\ItemStorage;
 use App\Models\Lot;
 use App\Repositories\LotRepository;
+use App\Repositories\SteamItemRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,6 +25,13 @@ class LotController extends Controller
      */
     protected $lots;
 
+    /**
+     * The steam item repository instance.
+     *
+     * @var SteamItemRepository
+     */
+    protected $webInventory;
+
 
     /**
      * The Steam schema instance
@@ -34,14 +42,16 @@ class LotController extends Controller
 
     /**
      * @param LotRepository $lots
+     * @param SteamItemRepository $webInventory
      * @param SteamAPI $steamSchema
      */
-    public function __construct(LotRepository $lots, SteamAPI $steamSchema)
+    public function __construct(LotRepository $lots, SteamItemRepository $webInventory, SteamAPI $steamSchema)
     {
         $this->middleware('auth');
 
         $this->lots = $lots;
         $this->steamSchema = $steamSchema;
+        $this->webInventory = $webInventory;
     }
 
     /**
@@ -52,22 +62,20 @@ class LotController extends Controller
      */
     public function index(Request $request)
     {
-        //TODO::
-
         $inventory = $this->steamSchema
-		->getPlayerInventory(570, 2, $request->user()->steam_id, [
+		->getPlayerInventory(570, $request->user()->steam_id, [
             'where' => [
                 ['key' => 'isTradable', 'operand' => '=', 'value' => true]
             ]
         ]);
         usort($inventory, [ItemStorage::getItemClass(570), 'sortByCharacter']);
-//
-//        $total = $this->steamSchema->getTotalPriceOfInventory($inventory);
 
         return view('lots.index', [
+            'steam_schema' => $this->steamSchema,
             'lots' => Lot::all(),
             'inventory' => $inventory,
-            'item_class' => ItemStorage::getItemClass(570)
+            'item_class' => ItemStorage::getItemClass(570),
+            'web_inventory' => $this->webInventory->forUser($request->user()),
         ]);
     }
 

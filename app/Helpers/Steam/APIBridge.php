@@ -12,7 +12,16 @@ class APIBridge
     protected $apiURL = 'http://api.steampowered.com/';
     protected $communityURL = 'http://steamcommunity.com/';
 
+    /**
+     * Ключ для операций с api.
+     * @var string
+     */
     protected $apiKey;
+
+    /**
+     * @var ItemPrice
+     */
+    protected $priceHelper;
 
     /**
      * @param $apiKey
@@ -20,6 +29,8 @@ class APIBridge
     public function __construct($apiKey)
     {
         $this->apiKey = $apiKey;
+
+        $this->priceHelper = new ItemPrice($apiKey);
     }
 
     public function callApi($category = '', $method, array $params)
@@ -56,13 +67,22 @@ class APIBridge
         return json_decode($json, true)['result']['items'];
     }
 
-    public function getRawPlayerInventory($appId, $appContext, $steamID)
+    /**
+     * @param $appId
+     * @param $steamID
+     * @return array
+     */
+    public function getRawPlayerInventory($appId, $steamID)
     {
+        $appContext = ItemStorage::getItemContextID($appId);
+
         $query = http_build_query([
             'l' => 'russian'
         ]);
-        $json = file_get_contents($this->communityURL . 'profiles/' . $steamID . '/inventory/json/' . $appId . '/' . $appContext . '?' . $query);
 
+        $url = $this->communityURL . 'profiles/' . $steamID . '/inventory/json/' . $appId . '/' . $appContext . '?' . $query;
+
+        $json = file_get_contents($url);
         $result = json_decode($json, true);
 
         if (!$result['success']) {
@@ -72,39 +92,22 @@ class APIBridge
         return $result;
     }
 
-    public function getItemPrices($appId, $currency, $name)
+    /**
+     * @param $steamId
+     * @param $appId
+     * @param $classId
+     * @return Item|null
+     */
+    public function findItemInInventory($steamId, $appId, $classId)
     {
-        $params = [
-            'currency' => $currency,
-            'appid' => $appId,
-            'market_hash_name' => $name
-        ];
+        $inventory = $this->getRawPlayerInventory($appId, $steamId);
 
-        $query = http_build_query($params);
-        $url = $this->communityURL . 'market/priceoverview/?' . $query;
-        $contents = @file_get_contents($url);
-
-        $result = json_decode($contents, true);
-
-        if (!$result['success']) {
-            throw new NotFoundHttpException('No item found for URL ' . $url);
+        foreach ($inventory['rgDescriptions'] as $item) {
+            if ($item['classid'] == $classId)
+                return $this->parseItem($item);
         }
 
-        unset($result['success']);
-
-        $lowest = (isset($result['lowest_price'])) ? str_replace(',', '.', $result['lowest_price']) : 0;
-        $median = (isset($result['median_price'])) ? str_replace(',', '.', $result['median_price']) : 0;
-        $volume = (isset($result['volume'])) ? str_replace(',', '', preg_replace('/[\s]*/', '', $result['volume'])) : 0;
-
-        $lowest = (!$lowest) ? 0 : $lowest;
-        $median = (!$lowest) ? 0 : $median;
-        $volume = (!$lowest) ? 0 : $volume;
-
-        $result['lowest_price'] = $lowest;
-        $result['median_price'] = $median;
-        $result['volume'] = $volume;
-
-        return $result;
+        return null;
     }
 
     public function getTotalPriceOfInventory($inventory)
@@ -169,31 +172,16 @@ class APIBridge
     public function parsePlayerInventory($inventory, $filters)
     {
         $result = [];
-        $additional = [];
 
         if (!isset($inventory['rgInventory'])) {
             return $result;
-        }
-
-        foreach ($inventory['rgInventory'] as $inventoryInfo) {
-            $classid = $inventoryInfo['classid'];
-
-            unset($inventoryInfo['id']);
-            unset($inventoryInfo['instanceid']);
-            unset($inventoryInfo['classid']);
-
-            $additional[$classid] = $inventoryInfo;
         }
 
         foreach ($inventory['rgDescriptions'] as $info) {
             $appId = $info['appid'];
 
             try {
-                $item = ItemStorage::getItemClass($appId); // Имя класса предмета для игрового айди $appId
-                /**
-                 * @var $item Item
-                 */
-                $item = new $item($info, $additional[$info['classid']]); // Уже объект
+                $item = $this->parseItem($info);
 
                 if (isset($filters['where'])) {
                     if (!$this->isItemOkWhere($item, $filters['where'])) {
@@ -201,28 +189,44 @@ class APIBridge
                     }
                 }
 
-                try {
-                    $prices = $this->getItemPrices($item->getAppId(), 5, $item->getMarketName());
-
-                    $item->setMinPrice($prices['lowest_price']);
-                    $item->setMedianPrice($prices['median_price']);
-                    $item->setMarketVolume($prices['volume']);
-                } catch (NotFoundHttpException $ex) {
-                    if($item->isTradable())
-                        Log::alert('Невозможно получить цены для предмета ' . $item->getMarketName());
-                }
-
                 $result[] = $item;
-            } catch (\InvalidArgumentException $e) {
-                Log::emergency($e->getMessage(), ['appid' => $appId, 'itemName' => $info['name']]);
+            } catch (\Exception $e) {
+                Log::emergency($e->getMessage());
             }
         }
+
+        $this->priceHelper->saveCache();
 
         return $result;
     }
 
-    public function getPlayerInventory($appId, $appContext, $steamID, array $filters = [])
+    public function getPlayerInventory($appId, $steamID, array $filters = [])
     {
-        return $this->parsePlayerInventory($this->getRawPlayerInventory($appId, $appContext, $steamID), $filters);
+        return $this->parsePlayerInventory($this->getRawPlayerInventory($appId, $steamID), $filters);
+    }
+
+    /**
+     * @param $info array
+     * @return Item
+     */
+    private function parseItem($info)
+    {
+        $item = ItemStorage::getItemClass($info['appid']); // Имя класса предмета для игрового айди $appId
+        /**
+         * @var $item Item
+         */
+        $item = new $item($info); // Уже объект
+
+        try {
+            $prices = $this->priceHelper->getItemPrices($item->getAppId(), 5, $item->getMarketName());
+
+            $item->setMinPrice($prices['lowest_price']);
+            $item->setMedianPrice($prices['median_price']);
+            $item->setMarketVolume($prices['volume']);
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+        }
+
+        return $item;
     }
 }

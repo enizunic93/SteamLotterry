@@ -24,7 +24,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $router->model('lot', 'App\Lot');
+        $router->model('lot', 'App\Models\Lot');
+        $router->model('item', 'App\Models\SteamItem');
 
         parent::boot($router);
     }

@@ -3,6 +3,9 @@ namespace App\Helpers\Steam;
 
 class DotaItem extends Item
 {
+    // Всегда одно для игры
+    public static $contextId = 2;
+
     protected $appId = 570;
 
     protected static $dotaRaritiesEnum = [
@@ -71,9 +74,9 @@ class DotaItem extends Item
     private $rarity;
     private $quality;
 
-    public function __construct(array $data, array $additional)
+    public function __construct(array $data)
     {
-        parent::__construct($data, $additional);
+        parent::__construct($data);
 
         foreach ($this->tags as $tag) {
             if (strtolower($tag['category']) == 'rarity') {

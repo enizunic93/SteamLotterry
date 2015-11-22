@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Lot;
+use App\Models\Lot;
 use App\User;
 
 class LotRepository

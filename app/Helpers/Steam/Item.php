@@ -3,13 +3,9 @@ namespace App\Helpers\Steam;
 
 abstract class Item
 {
-    /**
-     * Позиция в инвентаре
-     * @var integer
-     */
-    protected $pos;
+    public static $contextId;
 
-    /**
+        /**
      * Имя предмета
      * @var string
      */
@@ -113,13 +109,11 @@ abstract class Item
      */
     protected $marketVolume;
 
-    public function __construct(array $data, $additional)
+    public function __construct(array $data)
     {
         $this->appId = $data['appid'];
         $this->classId = $data['classid'];
         $this->instanceId = $data['instanceid'];
-
-        $this->pos = $additional['pos'];
 
         $this->iconUrl = $data['icon_url'];
         $this->iconUrlLarge = $data['icon_url_large'];
@@ -148,20 +142,6 @@ abstract class Item
             if (strtolower($tag['category_name']) == 'type') {
                 $this->type = $tag['name'];
             }
-
-            switch ($this->appId) {
-                // TF2
-                case 440:
-                    if (strtolower($tag['category_name']) == 'class') {
-                        $this->tf2Classes[] = $tag['name'];
-                    }
-                    break;
-                //CS:GO
-                case 730:
-                    break;
-                default:
-                    break;
-            }
         }
 
         if ($data['type'] != '')
@@ -176,10 +156,9 @@ abstract class Item
     }
 
     /**
-     * @param $price float|string|int
+     * @param $price float|int
      */
     public function setMinPrice($price) {
-        $price = (float) $price;
         $this->medianPrice = $price;
     }
 
@@ -190,16 +169,17 @@ abstract class Item
         return $this->medianPrice;
     }
 
+    /**
+     * @param $price float
+     */
     public function setMedianPrice($price) {
-        $price = (float) $price;
         $this->medianPrice = $price;
     }
 
     /**
-     * @param $val int|string
+     * @param $val int
      */
     public function setMarketVolume($val) {
-        $val = (int) $val;
         $this->marketVolume = $val;
     }
 
@@ -208,14 +188,6 @@ abstract class Item
      */
     public function getMarketVolume() {
         return $this->marketVolume;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPos()
-    {
-        return $this->pos;
     }
 
     /**

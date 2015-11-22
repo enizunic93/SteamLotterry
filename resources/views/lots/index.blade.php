@@ -30,6 +30,30 @@
         </form>
     </div>
 
+    @if (isset($web_inventory))
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Твой шмот на сайте</h2>
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Инфа</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($web_inventory as $item)
+                        <tr>
+                            <td>
+                                {{ dump($steam_schema->findItemInInventory(Auth::user()->steam_id, $item->app_id, $item->class_id)) }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
     @if (isset($inventory))
         <div class="row">
             <div class="col-md-12">
@@ -39,10 +63,11 @@
                     <tr>
                         <th>Имя:</th>
                         <th>Пикча:</th>
-                        <th>Торгуется:</th>
+                        <th>Айди:</th>
                         <th>Цена:</th>
                         <th>Тип:</th>
                         <th>Герой:</th>
+                        <th>Ссылка на цену:</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,11 +76,7 @@
                             <td>{{ $item->getName() }}</td>
                             <td><img src="{{ $item->getClearUrl() }}200fx200f" alt=""></td>
                             <td>
-                                @if ($item->isTradable())
-                                    Да
-                                @else
-                                    Нет
-                                @endif
+                                {{ $item->getClassId() }}
                             </td>
                             <td>
                                 @if ($item->getLotPrice() > 0)
@@ -66,6 +87,7 @@
                             </td>
                             <td>{{ $item->getType() }}</td>
                             <td>{{ $item->getHero() }}</td>
+                            <td><a href="http://anonymouse.org/cgi-bin/anon-www.cgi/http://steamcommunity.com/market/priceoverview/?currency=5&appid=570&market_hash_name={{ urlencode($item->getName()) }}">ТЫК)) ТЫГЫДЫК) ТЫК</a></td>
                         </tr>
                     @endforeach
                     </tbody>

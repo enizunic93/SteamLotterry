@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SteamItem extends Model
 {
-    protected $fillable = ['item_id', 'user_id'];
+    protected $fillable = ['app_id', 'class_id', 'user_id'];
 
     /**
      * Get the user that owns the task.
