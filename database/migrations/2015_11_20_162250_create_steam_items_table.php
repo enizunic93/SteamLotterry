@@ -40,7 +40,8 @@ class CreateSteamItemsTable extends Migration
             [
                 'app_id' => '570',
                 'class_id' => '237195590',
-                'user_id' => '1'
+                'user_id' => '1',
+                'bot_steam_id' => '76561198121640559'
             ]
         );
     }

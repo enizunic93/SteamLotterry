@@ -15,15 +15,26 @@ class CreateLotsTable extends Migration
     {
         Schema::create('lots', function (Blueprint $table) {
             $table->increments('id');
-            /**
-             * appId_classid
-             */
-            $table->string('item_id');
+            $table->bigInteger('app_id')->unsigned();
+            $table->bigInteger('class_id')->unsigned();
             $table->string('bot_steam_id', 64)->unique();
-            $table->float('price');
-            $table->integer('places');
+            // Тип цена на сайте за место
+            $table->integer('price_per_place')->unsigned();
+            // Тип сколько мест может быть
+            $table->integer('places')->unsigned();
             $table->timestamps();
         });
+
+        DB::table('lots')->insert(
+            [
+                'app_id' => '570',
+                'class_id' => '771176189',
+                'bot_steam_id' => '76561198121640559',
+                'price_per_place' => '220',
+                'places' => '50',
+                'created_at' => date('Y-m-d H:i:s'),
+            ]
+        );
     }
 
     /**

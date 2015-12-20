@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers\Steam;
+namespace App\Helpers\Steam\Items;
 
 class DotaItem extends Item
 {
@@ -193,8 +193,10 @@ class DotaItem extends Item
     {
         static::checkBeforeSort($a, $b);
 
-        $al = $a->getLotPrice();
-        $bl = $b->getLotPrice();
+        $al = $a->getPrice();
+        $al = ($al) ? $al->getSitePrice() : 0;
+        $bl = $b->getPrice();
+        $bl = ($bl) ? $bl->getSitePrice() : 0;
 
         if ($al == $bl) {
             return 0;

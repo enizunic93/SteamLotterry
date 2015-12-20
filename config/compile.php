@@ -14,7 +14,7 @@ return [
     */
 
     'files' => [
-        //
+        App\Helpers\Steam\Collection\BaseCollection::class
     ],
 
     /*

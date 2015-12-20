@@ -1,14 +1,19 @@
 <?php
 namespace App\Helpers\Steam;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Mockery\CountValidator\Exception;
-use SebastianBergmann\GlobalState\RuntimeException;
+use App\Helpers\Steam\Collection\Customs\ItemCollection;
+use App\Helpers\Steam\Items\ItemStorage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use \Debugbar;
 
+/**
+ * Class, responsible for Steam-app bridge.
+ * @see http://steamcommunity.com/dev/
+ */
 class APIBridge
 {
+    protected static $inventories;
+
     protected $apiURL = 'http://api.steampowered.com/';
     protected $communityURL = 'http://steamcommunity.com/';
 
@@ -19,7 +24,7 @@ class APIBridge
     protected $apiKey;
 
     /**
-     * @var ItemPrice
+     * @var ItemMarketPriceHelper
      */
     protected $priceHelper;
 
@@ -29,8 +34,7 @@ class APIBridge
     public function __construct($apiKey)
     {
         $this->apiKey = $apiKey;
-
-        $this->priceHelper = new ItemPrice($apiKey);
+        $this->priceHelper = new ItemMarketPriceHelper($apiKey);
     }
 
     public function callApi($category = '', $method, array $params)
@@ -51,20 +55,28 @@ class APIBridge
         return $contents;
     }
 
-    public function getRawPlayerItems($appId, $steamID)
+    private function getPage($url)
     {
-        try {
-            $json = $this->callApi('IEconItems_' . $appId . '/', 'GetPlayerItems/v0001/', [
-                'steamid' => $steamID,
-                'language' => 'russian'
-            ]);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,   // return web page
+            CURLOPT_HEADER => false,  // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,   // follow redirects
+            CURLOPT_MAXREDIRS => 10,     // stop after 10 redirects
+            CURLOPT_ENCODING => "",     // handle compressed
+            CURLOPT_USERAGENT => "Google Chrome like Gecko", // name of client
+            CURLOPT_AUTOREFERER => false,   // set referrer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
+            CURLOPT_TIMEOUT => 120,    // time-out on response
+        );
 
-            return [];
-        }
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
 
-        return json_decode($json, true)['result']['items'];
+        $content = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $content;
     }
 
     /**
@@ -74,159 +86,77 @@ class APIBridge
      */
     public function getRawPlayerInventory($appId, $steamID)
     {
+        if (isset(self::$inventories[$steamID]) && !empty(self::$inventories[$steamID]))
+            return self::$inventories[$steamID];
+
+        Debugbar::startMeasure('getRawInventory', 'Получаем инвентарь');
         $appContext = ItemStorage::getItemContextID($appId);
 
-        $query = http_build_query([
-            'l' => 'russian'
-        ]);
+        $url = $this->communityURL . 'profiles/' . $steamID . '/inventory/json/' . $appId . '/' . $appContext . '?l=russian';
+        $json = $this->getPage($url);
 
-        $url = $this->communityURL . 'profiles/' . $steamID . '/inventory/json/' . $appId . '/' . $appContext . '?' . $query;
+        Debugbar::stopMeasure('getRawInventory');
 
-        $json = file_get_contents($url);
+        Debugbar::startMeasure('parseRawInventory', 'Декодируем инвентарь');
         $result = json_decode($json, true);
 
         if (!$result['success']) {
+            Debugbar::stopMeasure('parseRawInventory');
+            Debugbar::warning('Ошибка парсинга инвентаря!');
+            Debugbar::info($result);
+
             return [];
         }
 
+        self::$inventories[$steamID] = $result;
+
+        Debugbar::stopMeasure('parseRawInventory');
+
         return $result;
     }
 
     /**
-     * @param $steamId
      * @param $appId
-     * @param $classId
-     * @return Item|null
+     * @param $steamID
+     * @return ItemCollection
      */
-    public function findItemInInventory($steamId, $appId, $classId)
+    public function queryPlayerInventory($appId, $steamID)
     {
-        $inventory = $this->getRawPlayerInventory($appId, $steamId);
+        $inventory = $this->getRawPlayerInventory($appId, $steamID);
 
-        foreach ($inventory['rgDescriptions'] as $item) {
-            if ($item['classid'] == $classId)
-                return $this->parseItem($item);
+        if (!isset($inventory['rgDescriptions'])) {
+            throw new \RuntimeException('Can\'t get inventory descriptions!');
         }
 
-        return null;
-    }
-
-    public function getTotalPriceOfInventory($inventory)
-    {
-        $total = 0;
-
-        /** @var Item $item */
-        foreach ($inventory as $item) {
-            if ($item->isTradable())
-                $total += $item->getLotPrice();
-        }
-
-        return $total;
-    }
-
-    protected function isItemOkWhere(Item $item, array $where)
-    {
-        foreach ($where as $filter) {
-            $response = $item->$filter['key']();
-
-            switch ($filter['operand']) {
-                default:
-                case '==':
-                case '=':
-                    if ($response != $filter['value']) {
-                        return false;
-                    }
-                    break;
-                case '>':
-                    if ($response <= $filter['value']) {
-                        return false;
-                    }
-                    break;
-                case '>=':
-                    if ($response < $filter['value']) {
-                        return false;
-                    }
-                    break;
-                case '<':
-                    if ($response >= $filter['value']) {
-                        return false;
-                    }
-                    break;
-                case '<=':
-                    if ($response > $filter['value']) {
-                        return false;
-                    }
-                    break;
-                case 'abs=':
-                    if (abs(floatval($response)) != abs(floatval($filter['value']))) {
-                        return false;
-                    }
-
-                    break;
-            }
-        }
-
-        // Нет предъяв
-        return true;
-    }
-
-    public function parsePlayerInventory($inventory, $filters)
-    {
-        $result = [];
-
-        if (!isset($inventory['rgInventory'])) {
-            return $result;
-        }
-
-        foreach ($inventory['rgDescriptions'] as $info) {
-            $appId = $info['appid'];
-
-            try {
-                $item = $this->parseItem($info);
-
-                if (isset($filters['where'])) {
-                    if (!$this->isItemOkWhere($item, $filters['where'])) {
-                        continue;
-                    }
-                }
-
-                $result[] = $item;
-            } catch (\Exception $e) {
-                Log::emergency($e->getMessage());
-            }
-        }
-
-        $this->priceHelper->saveCache();
+        $result = new ItemCollection($inventory['rgDescriptions'], new ItemMarketPriceHelper($this->apiKey));
 
         return $result;
     }
 
-    public function getPlayerInventory($appId, $steamID, array $filters = [])
+    public function parseSteamID($id)
     {
-        return $this->parsePlayerInventory($this->getRawPlayerInventory($appId, $steamID), $filters);
-    }
+        if (empty($id))
+            throw new \InvalidArgumentException('Bad steam id');
 
-    /**
-     * @param $info array
-     * @return Item
-     */
-    private function parseItem($info)
-    {
-        $item = ItemStorage::getItemClass($info['appid']); // Имя класса предмета для игрового айди $appId
-        /**
-         * @var $item Item
-         */
-        $item = new $item($info); // Уже объект
+        if (is_array($id))
+            $ids = $id;
+        else
+            $ids = [$id];
 
-        try {
-            $prices = $this->priceHelper->getItemPrices($item->getAppId(), 5, $item->getMarketName());
+        $json = json_decode($this->callApi('ISteamUser/', 'GetPlayerSummaries/v0002/', [
+            'key' => $this->apiKey,
+            'steamids' => implode(',', $ids)
+        ]), true);
 
-            $item->setMinPrice($prices['lowest_price']);
-            $item->setMedianPrice($prices['median_price']);
-            $item->setMarketVolume($prices['volume']);
-        } catch (\Exception $e) {
-            Log::debug($e->getMessage());
+        if (is_array($id)) {
+            return $json['response']['players'];
+        } else {
+            foreach ($json['response']['players'] as $player) {
+                if ($player['steamid'] == $id)
+                    return $player;
+            }
+
+            throw new NotFoundHttpException("Can't find user information for id " . $id);
         }
-
-        return $item;
     }
 }

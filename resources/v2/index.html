@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Рулетка, лотерея, goskins, госкинс, csgo, cs:go, скины, кейсы, ксго">
+		<meta name="description" content="Нож за 16 рублей? Без проблем! Заходи на goskins.pw и выигрывай!">
+		<title>GOSKINS.PW</title>
+		<link rel="shortcut icon" href="{{ asset('img/icon.png') }}" type="image/x-icon">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/modal.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	</head>
+	<body>
+		<div id="buy_window" class="modal">
+			<div class="m-head">
+				Подтверждение покупки
+				<div class="m-close"></div>
+			</div>
+			<div class="m-body">
+			</div>
+		</div>
+		<div class="push-wrapper">
+			<div class="push-block push-blue">
+				<div class="push-c push-c-blue">
+					<span class="push-i push-i-blue">
+						<p>?</p>
+					</span>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+				</div>
+			</div>
+			<div class="push-block push-red">
+				<div class="push-c push-c-red">
+					<span class="push-i push-i-red">
+						<p>!</p>
+					</span>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+				</div>
+			</div>
+			<div class="push-block push-orange">
+				<div class="push-c push-c-orange">
+					<span class="push-i push-i-orange">
+						<p>W</p>
+					</span>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+				</div>
+			</div>
+			<div class="push-block push-green">
+				<div class="push-c push-c-green">
+					<span class="push-i push-i-green">
+						<p>+</p>
+					</span>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+				</div>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="header">
+				<a href="http://vk.com/goskinspw" class="banner"></a>
+				<div id="menu" class="menu">
+					<span class="menu-line"></span>
+					<a href="/" id="main" class="item active">
+						<p>ГЛАВНАЯ</p>
+						<i class="dot active"></i>
+						<i class="batch" data-icon="&#xF162"></i>
+					</a>
+					<a href="/history.html" id="history" class="item">
+						<p>ИСТОРИЯ</p>
+						<i class="dot"></i>
+						<i class="batch" data-icon="&#xF0D1"></i>
+					</a>
+					<a href="#" id="fair_play" class="item" data-reveal-id="buy_window" data-animation="fade">
+						<p>ЧЕСТНАЯ ИГРА</p>
+						<i class="dot"></i>
+						<i class="batch" data-icon="&#xF075"></i>
+					</a>
+					<a href="#" id="support" class="item" data-reveal-id="buy_window" data-animation="fade">
+						<p>ПОДДЕРЖКА</p>
+						<i class="dot"></i>
+						<i class="batch" data-icon="&#xF077"></i>
+					</a>
+				</div>
+			</div>
+			<div class="profile"> <!--Добавь компановочный класс inactive для скрытия содержимого блока-->
+				<a href="#" class="button">Для доступа к профилю требуется авторизация</a>
+				<div class="profile-left">
+					<div class="avatar">
+						<img src="/img/standart_avatar.jpg" alt="">
+					</div>
+					<div class="info">
+						<div class="nick">
+							<a href="#">BOT ALLU</a>
+							<div class="p-block orange">24<i class="fa fa-rub"></i></div>
+							<div class="p-block red">!</div>
+							<div class="p-block blue">Panel</div>
+						</div>
+						<form id="settings">
+							<div id="id_balance" class="balance">
+								<input type="text" placeholder="Сумма пополнения">
+								<input class="button" type="button" value="Пополнить">
+							</div>
+							<div id="id_trade-link" class="trade-link">
+								<input type="text" placeholder="Ваша трейд-ссылка">
+								<a target="_blank" href="http://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url" class="button blue">?</a>
+								<input class="button" type="button" value="Сохранить">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="profile-right">
+					<div class="capsule">
+						<div class="button">Лоты с вашим участием</div>
+						<div class="button inactive">История ваших выигрышей</div>
+					</div>
+					<div class="lots-carousel">
+						<div class="carousel-button green">
+							<i class="fa fa-chevron-left"></i>
+						</div>
+						<div class="lots">
+							<div class="lot">
+								<img src="/img/standart_avatar.jpg" alt="">
+							</div>
+							<div class="lot">
+								<img src="/img/standart_avatar.jpg" alt="">
+							</div>
+							<div class="lot">
+								<img src="/img/standart_avatar.jpg" alt="">
+								<div class="tooltip blue arrow-top">
+									<div class="avatar">
+										<img src="/img/standart_avatar.jpg" alt="">
+									</div>
+									<div class="info">
+										<p>Победитель:</p>
+										<h2>BOT ZET 1 2 3 4</h2>
+										<p>Сумма выигрыша:</p>
+										<h2>12356<i class="fa fa-rub"></i></h2>
+									</div>
+								</div>
+							</div>
+							<div class="lot">
+								<img src="/img/standart_avatar.jpg" alt="">
+							</div>
+							<div class="lot">
+								<img src="/img/standart_avatar.jpg" alt="">
+							</div>
+						</div>
+						<div class="carousel-button green">
+							<i class="fa fa-chevron-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="one-line">
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="/lot_page.html" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+				</div>
+				<div class="two-line">
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+				</div>
+				<div class="three-line">
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+					<div class="i-lot b-orange"> <!--Начало лота-->
+						<div class="image">
+							<img src="/img/item_image.png" alt="">
+						</div>
+						<div class="t-block">
+							<p>? Нож с лезвием-крюком | Городская...</p>
+						</div>
+						<div class="t-block WearCategory4">
+							<p>Закаленное в боях</p>
+						</div>
+						<div class="t-block">
+							<p>Цена в стиме</p>
+							<div class="price orange">
+								2424 <i class="fa fa-rub"></i>
+							</div>
+						</div>
+						<div class="load-wrap">
+							<div class="text orange">
+								<h1>127</h1>
+								<h3>МЕСТ<br>ВСЕГО</h3>
+							</div>
+							<div class="load-bar orange" style="width: 63%">
+								<div class="text">
+									<h1>252</h1>
+									<h3>МЕСТ<br>ОСТАЛОСЬ</h3>
+								</div>
+							</div>
+						</div>
+						<span class="hovered-i-lot">
+							<div class="ticket-info">
+								<div class="tickets">
+									<p class="places">216</p>
+									<p class="price">16<i class="fa fa-rub"></i></p>
+								</div>
+							</div>
+							<a href="#" class="buy">
+								<p>КУПИТЬ ЗА 16<i class="fa fa-rub"></i></p>
+							</a>
+						</span>
+					</div> <!--Конец лота-->
+				</div>
+			</div>
+		</div>
+		<div id="label" class="label">ИНФОРМАЦИЯ</div>
+		<div id="footer" class="footer">
+			<div class="f-content">
+				<a href="#" class="logo"></a>
+				<p>Powered by Steam, a registered trademark of Valve Corporation.<br>GOSKINS.PW - 2015</p>
+			</div>
+		</div>
+		<script src="/js/jquery.js"></script>
+		<script src="/js/main.js"></script>
+		<script src="/js/modal.js"></script>
+	</body>
+</html>

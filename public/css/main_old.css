@@ -1,0 +1,298 @@
+/*Дизайн и вёрстка - BaRReT/
+
+/*Импорт шрифтов*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,800&subset=latin,cyrillic);
+@font-face{font-family:Batch; src:url('../assets/batch.eot'); src:url('../assets/batch.eot') format('embedded-opentype'), url('../assets/batch.woff') format('woff'), url('../assets/batch.ttf') format('truetype'), url('../assets/batch.svg') format('svg'); font-weight:normal; font-style:normal}
+
+/*Сброс*/
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,a,blockquote {margin:0; padding:0; list-style: none; box-sizing: border-box}
+
+/*Основные стили*/
+
+html {height: 100%}
+body {font: 12px "Open Sans", sans-serif; width: 100%; height: 100%; border-top: 3px solid #ff00de; background: url(../img/logo.png) no-repeat 50% 8%, url(../img/bg_light.png) no-repeat 50% 0, url(../img/bg.jpg) no-repeat 50% 0 #272727}
+a {outline: none; text-decoration: none}
+a:hover {text-decoration: none}
+i,img {border: none; box-sizing: border-box}
+input {vertical-align: middle; border: none; outline: none; font-family: "Open Sans"}
+input[type="text"] {background: #512318; color: #d7694e; height: 35px; padding: 0 10px; border-radius: 2px}
+input[type="text"]::-webkit-input-placeholder {color: #9b4632}
+input[type="text"]:-ms-input-placeholder {color: #9b4632}
+.wrapper {width: 1038px; margin: 0 auto}
+i.batch {font-family: "Batch"; font-size: 16px; font-style: normal; line-height: 1; display: inline-block}
+.button {background: #6a9631; color: #fff; font-weight: bold; border-radius: 2px; display: inline-block; height: 34px; padding: 7px 20px; cursor: pointer}
+.block {background: #fff; border-radius: 2px; display: inline-block}
+
+/*/*Цвета*/
+
+.red {background: #d53b33; color: #d53b33}
+.orange {background: #d69c21; color: #d69c21}
+.green {background: #6a9631; color: #6a9631}
+.blue {background: #34abdd; color: #34abdd}
+.gray {background: #b2b3b3; color: #b2b3b3}
+.purple {background: #c900cb; color: #c900cb}
+.lilac {background: #8708d7; color: #8708d7}
+
+/*/*Статус поношенности*/
+
+.WearCategory4 {color: #FF6969 !important}
+.WearCategory3 {color: #BD704F !important}
+.WearCategory2 {color: #B49363 !important}
+.WearCategory1 {color: #C2BDB7 !important}
+.WearCategory0 {color: #A7EDF3 !important}
+
+/*/*Редкость предмета*/
+
+.Rarity_Common_Weapon {}
+.Rarity_Rare_Weapon {}
+.Rarity_Uncommon_Weapon {}
+.Rarity_Mythical_Weapon {color: #8847ff !important}
+.Rarity_Legendary_Weapon {color: #e153d3 !important}
+.Rarity_Ancient_Weapon {color: #ff6841 !important}
+
+/*/*Цвета для границы лотов*/
+
+.b-orange {border-top: 5px solid #ffc000}
+.b-red {border-top: 5px solid #d35353}
+.b-gray {border-top: 5px solid #d6d6d6}
+.b-purple {border-top: 5px solid #e120e3}
+.b-lilac {border-top: 5px solid #a125ef}
+.b-blue {border-top: 5px solid #6bd3ff}
+
+/*Push-уведомления*/
+
+.push-wrapper {position: absolute; top: 20px; right: 20px}
+.push-red {background: #d53b33; border-top: 5px solid #d35353; color: #d53b33}
+.push-orange {background: #d69c21; border-top: 5px solid #ffc000; color: #d69c21}
+.push-green {background: #6a9631; border-top: 5px solid #73dd16; color: #6a9631}
+.push-blue {background: #34abdd; border-top: 5px solid #6bd3ff; color: #34abdd}
+.push-red:after {content: ""; background: url(../img/crosses.gif) -18px 0 no-repeat}
+.push-orange:after {content: ""; background: url(../img/crosses.gif) -18px -18px no-repeat}
+.push-green:after {content: ""; background: url(../img/crosses.gif) 0 0 no-repeat}
+.push-blue:after {content: ""; background: url(../img/crosses.gif) 0 -18px no-repeat}
+.push-block {padding: 3px; width: 207px; border-radius: 2px; box-shadow: inset 0px 5px 10px rgba(0,0,0,0.4); position: relative; margin-top: 6px; cursor: pointer; z-index: 3}
+.push-block:nth-child(1) {margin: 0}
+.push-block:after {content: ""; width: 18px; height: 18px; top: 38%; left: 47%; position: absolute; z-index: 5; display: block; opacity: 0; transition: all 0.2s ease-in 0.1s}
+.push-block:before {content: ""; background: rgba(0,0,0,0.6); width: 207px; height: 100%; top: 0; left: 0; z-index: 4; position: absolute; display: block; opacity: 0; transition: all 0.1s ease-in}
+.push-block:hover:after {content: ""; opacity: 1}
+.push-block:hover:before {content: ""; opacity: 1}
+.push-c-red {background: #391a11}
+.push-c-orange {background: #392f11}
+.push-c-green {background: #263911}
+.push-c-blue {background: #112d39}
+.push-c {padding: 1px; border-radius: 2px; position: relative}
+.push-c > p {width: 166px; padding: 6px 4px; float: right; font-size: 11px;word-break: break-word;}
+.push-c:after {content: ""; display: block; clear: both}
+span.push-i-red {background: #d53b33}
+span.push-i-orange {background: #d69c21}
+span.push-i-green {background: #6a9631}
+span.push-i-blue {background: #34abdd}
+span.push-i {color: #fff; border-radius: 2px; float: left; width: 33px; position: absolute; top: 1px; left: 1px;height: 97%;vertical-align: middle;    text-align: center;display: flex;    justify-content: center;}
+span.push-i > p { text-align: center; font-size: 14px; font-weight: 700;align-self: center;}
+
+/*Шапка*/
+
+.header {width: 100%; margin: 115px 0 27px 0}
+
+/*/*Баннер*/
+
+a.banner {width: 282px; height: 61px; margin: 0 auto; background: url(../img/banner.png); display: block; transition: all 0.3s ease-in}
+a.banner:hover {opacity: 0.9}
+
+/*/*Меню*/
+
+.menu {padding-bottom: 17px; width: 364px; margin: 55px auto 0 auto; position: relative}
+.menu:after {content: ""; display: block; clear: both}
+a.item {float: left; margin: 0 20px 0 0; height: 36px; border-radius: 2px; position: relative; background: #c600a3; color: #fff}
+a.item > p {margin-top: 36px; padding-top: 5px; font-size: 14px; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFpJREFUeNpiPMawuImBgSGHARW8BeJNQLyMBUiwArEgVOInEHcBcS8QfwQJgBR8hUr+BmJnID6KbBQTEG+GSu5Al4QpuAjEQVBrmLEpAIEtQOwLxHroigACDADwyhBPSy0bJgAAAABJRU5ErkJggg==) no-repeat 50% 2%; transition: all 0.3s ease-in}
+a.item:hover > p {color: #f682e2}
+a.item.active {color: #ff4ee0}
+a.item:last-child {margin: 0 0 20px 0}
+a.item > .batch:before {content: ""; position: absolute; top: 0; padding: 10px 40% 0 37%; width: 100%; text-shadow: 1px 1px 0 #b20092, -1px -1px 0 #b20092; height: 36px; content:attr(data-icon); color: #fff; box-sizing: border-box}
+a.item > .dot {position: absolute; width: 100%; margin-top: 6px; height: 10px; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD9JREFUeNpi+P//vywQ7wXiL0B8AIgVGaACyOAII5D4yMDAwMeAAP+YgMRJBlRwHKRdHoj3A/E/kFYgVgIIMAAi9z1QjPHOJQAAAABJRU5ErkJggg==) no-repeat 50% 50% }
+a.item > .dot.active {background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHVJREFUeNpi/G95hwEIOIC4HIhjgFgGiJ8A8TIg7gDi74xARZxAxh4gtmLABMeA2JUJSJTiUMAAFa8AKYpmwA9iQIrkCCiSBSl6TEDRY5CipQQULQMp6ob6Ahs4DsRtIEXfgNgFiJuB+B4Q/4HS7VDxbwABBgBqrxh7esqVDAAAAABJRU5ErkJggg==) no-repeat 50% 50%}
+span.menu-line {width: 100%; height: 1px; background: #ff39dc; position: absolute; bottom: 0; display: block; box-shadow: 0px 0px 10px rgba(255,57,220,0.9)}
+
+/*Профиль пользователя*/
+
+.profile {width: 100%; height: 132px; background: url(data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAgICAgICAgICAgIDAwMDAwMDAwMDAQEBAQEBAQIBAQICAgECAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP/wAARCACEAAIDAREAAhEBAxEB/8QAZwABAQEBAAAAAAAAAAAAAAAABAMCCQEBAQEAAwAAAAAAAAAAAAAAAwABAggJEAACAgIBBQAAAAAAAAAAAAAAEhG4AaiBIWGh4UgRAAICAgIDAAAAAAAAAAAAAAAR1LYStQG0IaWm/9oADAMBAAIRAxEAPwDjTFhYOsMU9L1syi2JUooi49qWix8FFEx26LLjZVeCiirdF0s4hRRVvBC52kXk2MPjYEIXt9Vr6KMLjYkIW2ilGHxsyErbxSjD42lCFuKpLrDY2xCFuapsYbG3oQuN1V4KMMrkIS7qFGGV1LLeNSjCrj7gtF6YKMKr0WW96k+sIr4b6b5eDY5y8fen/9k=) no-repeat 50% 50% #8d3e2b; border-top: 5px solid #d35353; border-radius: 2px; box-shadow: inset 0px 14px 30px rgba(0,0,0,0.4)}
+.profile:after {content: ""; display: block; clear: both}
+.profile.inactive {background: url(../img/profile_inactive.png) no-repeat 50% 50% #000; position: relative}
+.profile.inactive > a.button {background: #d35353; color: #fff; font-weight: bold; border-radius: 2px; position: absolute; display: inline-block; left: 32.7%; top: 38%;padding: 8px 20px;}
+.profile > a.button {display: none}
+.profile.inactive > .profile-left {display: none}
+.profile.inactive > .profile-right {display: none}
+.p-block {color: #fff; cursor: pointer; font-weight: bold; font-size: 12px; height: 22px; border-radius: 2px; padding: 2px 8px 0 8px; vertical-align: top; margin-top: 12px; display: inline-block}
+
+/*/*Левая сторона*/
+
+.profile-left {padding: 17px 27px 17px 15px; float: left}
+.profile-left > .avatar {width: 96px; height: 96px; border-radius: 2px; overflow: hidden; border: 3px solid #733323; display: inline-block; vertical-align: top}
+.profile-left > .avatar > img {width: 100%; height: 100%; display: block}
+.profile-left > .info {display: inline-block; margin-left: 5px; vertical-align: top}
+.profile-left > .info > .nick {margin-top: -8px}
+.profile-left > .info > .nick > a {color: #fff; font-weight: bold; font-size: 30px; display: inline-block; max-width: 256px; max-height: 38px; overflow: hidden}
+.balance {position: relative; margin: -4px 0 3px 0}
+.balance > input[type="button"] {border: 1px solid #512318; margin-left: -5px; padding: 5px 20px 7px 20px; height: 35px}
+.trade-link {margin-top: -1px}
+.trade-link > input[type="text"] {height: 29px}
+.trade-link > a {border-top: 1px solid #512318; color: #fff; border-left: 1px solid #512318; border-bottom: 1px solid #512318; padding: 3px 20px 5px 20px; border-right: 3px solid #512318; height: 29px; vertical-align: middle; margin-left: -5px}
+.trade-link > input[type="button"] {border: 1px solid #512318; height: 29px; height: 29px; padding: 3px 20px 5px 20px; vertical-align: middle; margin-left: -4px}
+
+/*/*Правая сторона*/
+
+.profile-right {padding: 17px 16px 5px 16px; float: right}
+.profile-right > .capsule {width: 486px; height: 36px; background: #512318; border-radius: 2px}
+.profile-right > .capsule > .button {float: left; padding: 7px 35px; margin: 1px}
+.profile-right > .capsule > .button:first-child {float: left}
+.profile-right > .capsule > .button:last-child {float: right}
+.profile-right > .capsule > .button.inactive {background: none; color: #d7694e; font-weight: normal}
+.lots-carousel {width: 486px; margin-top: 2px}
+.lots-carousel > .lots {float: left; margin-left: 40px}
+.lots-carousel > .lots > .lot {width: 61px; height: 61px; position: relative; display: inline-block; margin-right: 10px; cursor: pointer}
+.lots-carousel > .lots > .lot > img {width: 100%; height: 100%}
+.lots-carousel > .lots > .lot:last-child {margin: 0; opacity: 0.3}
+.lots-carousel > .lots > .lot:first-child {opacity: 0.3}
+.lots-carousel > .lots > .lot:nth-child(2),.lot:nth-child(4) {opacity: 0.7}
+.lots-carousel > .carousel-button {height: 61px; border-radius: 2px; width: 23px; opacity: 0.6; transition: all 0.3s ease-in; cursor: pointer}
+.lots-carousel > .carousel-button i {color: #fff; text-align: center; font-style: normal; display: block; height: 100%; padding: 98% 0 0 0}
+.lots-carousel > .carousel-button:hover {opacity: 1}
+.lots-carousel > .carousel-button:first-child {float: left}
+.lots-carousel > .carousel-button:last-child {float: right}
+.lots-carousel:after {content: ""; display: block; clear: both}
+
+/*/*Тултип лота*/
+
+.tooltip {display: none; position: absolute; top: 72px; left: -79px; width: 222px; z-index: 1; padding: 5px; border-radius: 2px; border-bottom: 5px solid #6bd3ff; box-shadow: inset 0 12px 30px rgba(0,0,0,0.5), inset 0 5px 15px rgba(0,0,0,0.5)}
+.tooltip:before {content: ""; display: block; position: absolute; margin: -10px 45%; border: 5px solid transparent; border-bottom-color: #34abdd; border-top: 0}
+.tooltip > .avatar {width: 77px; height: 77px; border-radius: 2px; display: inline-block; vertical-align: top; overflow: hidden}
+.tooltip > .avatar > img {width: 100%; height: 100%}
+.tooltip > .info {display: inline-block; color: #fff; margin-top: -2px}
+.tooltip > .info > h2 {font-size: 24px; font-weight: bold; width: 130px; height: 32px; overflow: hidden; margin: -6px 0 -6px 0}
+.lots-carousel > .lots > .lot:hover > .tooltip {display: block}
+
+/*Контент*/
+
+.content {margin: 22px 0 22px 0}
+
+/*/*Лоты*/
+
+.one-line {margin: 0 0 34px 0}
+.content > .two-line {margin: 0 0 34px 0}
+.three-line {}
+.i-lot {width: 234px; height: 338px; position: relative; background: #1a1a1a; display: inline-block; border-radius: 2px; color: #fff; font-size: 11px; margin: 0 30px 0 0; overflow: hidden; box-shadow: inset 0px 14px 30px rgba(0,0,0,0.4)}
+.i-lot:last-child {margin: 0 0 0 2px}
+.i-lot > .image {height: 178px; width: 100%; overflow: hidden; position: relative}
+.i-lot > .image > img {width: inherit; height: inherit; padding: 15% 20%}
+.i-lot > .t-block {height: 35px; width: 100%; position: relative; overflow: hidden}
+.i-lot > .t-block > p {padding: 10px 0 0 12px}
+.i-lot > .t-block:nth-child(2),.t-block:nth-child(4) {background: #292929}
+.i-lot > .t-block > .price {height: 29px; color: #fff; border-radius: 2px; font-weight: bold; right: 3px; top: 3px; padding: 6px 9px; position: absolute}
+.i-lot > .load-wrap {height: 58px; position: relative}
+.i-lot > .load-wrap > .text {font-weight: bold; background: none; width: 100px; position: absolute; right: 1px}
+.i-lot > .load-wrap > .text > h1 {font-size: 31px; display: inline-block}
+.i-lot > .load-wrap > .text > h3 {font-weight: normal; font-size: 10px; display: inline-block; line-height: 15px}
+.i-lot > .load-wrap > .load-bar {width: 1%; overflow: hidden; height: inherit}
+.i-lot > .load-wrap > .load-bar > .text {font-weight: bold; color: #fff; width: 150px; margin-left: 10px}
+.i-lot > .load-wrap > .load-bar > .text > h1 {font-size: 31px; display: inline-block}
+.i-lot > .load-wrap > .load-bar > .text > h3 {font-weight: normal; font-size: 10px; display: inline-block; line-height: 15px}
+.i-lot > .hovered-i-lot {display: none; top: 0; left: 0; width: 100%; height: 100%; position: absolute; background: rgba(0,0,0,0.8); transition: all 0.3s ease-in}
+.i-lot:hover > .hovered-i-lot {display: block}
+.i-lot > .hovered-i-lot > .ticket-info {width: 150px; color: #524200; font-size: 12px; margin: 121px auto 6px auto}
+.i-lot > .hovered-i-lot > .ticket-info > .tickets {background: url(../img/tickets.png); cursor: default; width: 100%; height: 36px}
+.i-lot > .hovered-i-lot > .ticket-info > .tickets > p.places {padding: 10px 0 0 28px}
+.i-lot > .hovered-i-lot > .ticket-info > .tickets > p.price {padding: 7px 0 0 50px; vertical-align: top}
+.i-lot > .hovered-i-lot > .ticket-info > .tickets > p {display: inline-block}
+.i-lot > .hovered-i-lot > .buy {background: #80a527; border-radius: 2px; display: block; width: 150px; margin: 0 auto 7px auto}
+.i-lot > .hovered-i-lot > .buy p {color: #fff; text-align: center; padding: 24px 0 24px 0}
+
+/*/*История*/
+
+.history {width: 100%; border-top: 5px solid #76adff; background: #304d79; border-radius: 2px; padding: 15px; box-shadow: inset 0px 14px 30px rgba(0,0,0,0.4)}
+.history > table.table {background: #132136; color: #fff; width: 100%; border-collapse: collapse}
+.history > table.table > tbody > tr {border-top: 1px solid #304d79}
+.history > table.table > tbody > tr > td {text-align: center; height: 48px; border-right: 1px solid #304d79}
+.history > table.table > tbody > tr > th {text-align: center; height: 48px; border-right: 1px solid #132136}
+.history > table.table > tbody > tr > td:last-child,th:last-child {border: none !important}
+.history > table.table > tbody > tr > tr:first-child,tr:nth-child(2) {border-top: none !important}
+.history > table.table > tbody > tr:first-child {border-radius: 2px; border: 1px solid #132136; height: 54px; background: #304d79; font-weight: bold}
+.history > table.table > tbody > tr > td > .button {height: 44px; padding: 11px 41px 0 41px}
+.history > table.table > tbody > tr > td > a.nick {color: #34abdd; text-decoration: underline}
+
+/*/*Страница лота*/
+
+.p-lot {width: 100%; border-top: 5px solid #cad54e; background: #767d2d; border-radius: 2px; padding: 15px; box-shadow: inset 0px 14px 30px rgba(0,0,0,0.4)}
+.p-lot > .lot-cont {background: #2f3213}
+.p-lot > .lot-cont > .progress-bar {background: #99ac41; width: 100%; height: 70px}
+.p-lot > .lot-cont > .progress-bar > .filled {background: #cad54e; height: inherit; width: 60%}
+.p-lot > .lot-cont:after {content: ""; display: block; clear: both}
+.p-lot > .lot-cont > .action-menu:after {content: ""; display: block; clear: both}
+.p-lot > .lot-cont > .action-menu {background: #767d2d; width: 100%; box-shadow: inset 0 4px 0 #71782c, inset 0 -4px 0 #818932}
+.p-lot > .lot-cont > .action-menu > .action-block {border-right: 1px solid #2f3213; border-left: 1px solid #959d39; padding: 8px; float: left}
+.p-lot > .lot-cont > .action-menu > .action-block:last-child {border-right: none}
+.p-lot > .lot-cont > .action-menu > .action-block:first-child {border-left: none}
+.p-lot > .lot-cont > .action-menu > .action-block > .block {height: 73px; width: 123px; position: relative}
+.p-lot > .lot-cont > .action-menu > .action-block > .block > img {width: inherit; height: inherit; padding: 10% 20%}
+.p-lot > .lot-cont > .action-menu > .action-block > .item-description {display: inline-block; vertical-align: top; margin: 0 0 0 4px}
+.p-lot > .lot-cont > .action-menu > .action-block > .item-description > .desc-block {padding: 2px 14px 0 14px; height: 23px; color: #fff; background: #3d411a; margin-bottom: 2px; border-radius: 2px; font-weight: bold}
+.p-lot > .lot-cont > .action-menu > .action-block > .item-description > .desc-block:last-child {margin-bottom: 0}
+.p-lot > .lot-cont > .action-menu > .action-block > .block > .price-block {height: 16px; padding: 2px 8px; display: inline-block; position: absolute; right: 2px; top: 2px; border-radius: 2px; color: #fff; font-size: 9px; font-weight: bold}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket {background: #ffd800; line-height: 14px; color: #806f12; font-weight: bold; text-shadow: 0 1px 0 #ffff00; float: left; margin: 4px 32px 5px 32px; padding: 15px 13px 0 13px; position: relative; height: 67px; border-top: 1px solid #806f12; border-bottom: 1px solid #806f12; box-shadow: 0 3px 0 #ffd800, 0 -3px 0 #ffd800}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket:before {content: ""; position: absolute; background: url(../img/ticket_end.png) no-repeat 0 0; width: 29px; height: 73px; left: -29px; top: -4px}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket:after {content: ""; position: absolute; background: url(../img/ticket_end.png) no-repeat -29px 0; width: 29px; height: 73px; right: -29px; top: -4px}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket > h1 {font-size: 30px}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket > h1 > i {line-height: 0 !important; font-size: 27px}
+.p-lot > .lot-cont > .action-menu > .action-block > .ticket > h2 {font-size: 18px}
+.p-lot > .lot-cont > .action-menu > .action-block > .picture {width: 73px; height: 73px; border-radius: 2px; overflow: hidden; display: inline-block}
+.p-lot > .lot-cont > .action-menu > .action-block > .picture > img {width: 100%; height: 100%}
+.p-lot > .lot-cont > .action-menu > .action-block > .buttons {display: inline-block; color: #fff; vertical-align: top; margin: 0 0 0 3px}
+.p-lot > .lot-cont > .action-menu > .action-block > .buttons > .button {height: 23px; color: #fff; padding-top: 3px}
+.p-lot > .lot-cont > .action-menu > .action-block > .buttons > p {margin: 5px 0 5px 36px}
+.p-lot > .lot-cont > .places {padding: 5px 0 0 5px}
+.p-lot > .lot-cont > .places > .place {width: 35px; height: 35px; border-radius: 2px; cursor: pointer; text-align: center; padding-top: 7px; float: left; background: #353815; color: #767d2d; font-weight: bold; border: 2px dashed #767d2d; margin: 0 5px 5px 0}
+.p-lot > .lot-cont > .places > .place > img {width: 100%; height: 100%; overflow: hidden}
+.p-lot > .lot-cont > .places > .place:hover {color: #fff; border: none}
+.p-lot > .lot-cont > .places:after {content: ""; display: block; clear: both}
+.p-lot > .lot-cont > .placed-history {padding: 0 5px 5px 5px}
+.p-lot > .lot-cont > .placed-history > .history-block {background: #767d2d; margin-bottom: 5px; border-radius: 2px; width: 100%; height: 64px}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont {padding: 12px}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > i {font-size: 40px; line-height: 40px; vertical-align: top; display: inline-block; color: #2f3213}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > .history-avatar { margin-left: 12px; display: inline-block; width: 40px; height: 40px; display: inline-block; border-radius: 2px; overflow: hidden}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > .history-avatar img {width: 100%; height: 100%}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > .history-info {margin-left: 3px; display: inline-block; vertical-align: top}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > .history-info > h1 {font-size: 18px; color: #fff; line-height: 11px}
+.p-lot > .lot-cont > .placed-history > .history-block > .cont > .history-info > h2 {font-size: 33px; color: #aeb844; line-height: 0}
+.p-lot > .lot-cont > .placed-history > .history-block:nth-child(2) {opacity: 0.6}
+.p-lot > .lot-cont > .placed-history > .history-block:nth-child(3) {opacity: 0.3}
+.p-lot > .lot-cont > .placed-history > .history-block:nth-child(4) {opacity: 0.1; margin: 0}
+.p-lot > .lot-cont > .winner {padding: 5px 5px 0 5px}
+.p-lot > .lot-cont > .winner > .target {background: url(../img/target.png); width: 245px; height: 245px; margin: 0 auto; padding-top: 45px}
+.p-lot > .lot-cont > .winner > .target > .avatar {width: 150px; height: 150px; margin: 0 auto; border-radius: 2px; overflow: hidden; box-shadow: 0 0 20px rgba(209,255,98,0.5)}
+.p-lot > .lot-cont > .winner > .target > .avatar > img {width: 100%; height: 100%}
+.p-lot > .lot-cont > .winner > .winner-info {color: #fff; font-size: 17px; text-align: center; margin-top: 10px}
+.p-lot > .lot-cont > .winner > .winner-info > a {color: #FF6841; font-weight: bold}
+.p-lot > .lot-cont > .winner > .fairplay {width: 100%; border: 1px solid #c8d54a; border-radius: 2px; background: #60652e; padding: 2px; margin-top: 10px}
+.p-lot > .lot-cont > .winner > .fairplay > .button {height: 38px; padding-top: 10px; color: #fff}
+.p-lot > .lot-cont > .winner > .fairplay > .right-pos > .button {height: 38px; padding-top: 10px; color: #fff}
+.p-lot > .lot-cont > .winner > .fairplay > p {display: inline-block; color: #fff; margin-left: 10px}
+.p-lot > .lot-cont > .winner > .fairplay > .right-pos {float: right; margin-right: 2px}
+.p-lot > .lot-cont > .winner > .fairplay > .right-pos > img {display: inline-block; margin-left: 10px}
+.p-lot > .lot-cont > .winner > .fairplay > .winned-place {display: inline-block; margin-left: 10px; border: 1px solid #c8d54a; padding: 3px 5px; color: #c8d54a}
+
+.text {font-weight: bold}
+.text > h1 {font-size: 48px; display: inline-block}
+.text > h3 {font-size: 18px; display: inline-block; line-height: 21px}
+.color-empty {color: #fff; float: right; margin-right: 21px}
+.color-filled {color: #2f3213; float: left; margin-left: 21px}
+.button-inactive {background: #3f3f3f}
+
+/*Подвал*/
+
+.footer {width: 100%; background: #181818; height: 0px; transition: all 0.3s ease-in}
+.label {width: 213px; cursor: pointer; color: #fff; height: 38px; margin-bottom: -2px; background: #181818; margin: 0 auto; text-align: center; padding-top: 10px; border-radius: 2px}
+.footer > .f-content {width: 425px; margin: 0 auto; padding-top: 31px; display: none}
+.footer > .f-content > .logo {background: url(data:image/jpg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAgICAgICAgICAgIDAwMDAwMDAwMDAQEBAQEBAQIBAQICAgECAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP/wAARCAAfACMDAREAAhEBAxEB/8QAbAAAAQQDAAAAAAAAAAAAAAAACQcICgsABAUBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAgIABAQFBQEAAAAAAAQDBQYHAggBCQAUFRYSExcYNCU2VgoRYiRkNRkRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AIX/AIB+Olmj7ltNk+2PMLOrWj9Z6jtWgoTsFbljzdjh6kSj92yd+bUjYS3v3wJTaTtjBDnc3htHyyW+EfDPPHhHnPPADm9+mmmjsjrKt9w+sif1hYVc0NXtH0bstDqekTfLQIJD3ptcoprdb8nKbOF1gz5TlFSIw8lnL+YKckmzlRPgpYtVUIoPgM8BtAgmuZoba2hlODi4FDggAAjqlmnGlq4IChhioYKLklErqY4Jp4Y5Z555ccccc88+AsNelbrL13ojqxwtbtG5rVxrO6ZuDsex1nsyRHGOnqJALjfs2JzBYSactzcFaVmRTFJcw0hfJTFqzbgR0kFkzeSgNrCNgupveaITzUqprk1TtFssSuXaq3ypa+f4M3SF1gKTOYLm3RSNjpAOZbbFgecyQlm0dVFqUSwIS5TyTxy4CrW7ANK7H6+9sbZ1asvnNwOgT1wvE5bgFmC32FXT2nw5wadtaPzikUUn9iWT5KHTXI4b3JMkLNTJUZTwDNPAGZ6gayn6ae8e4lRwU+a3LonqXLbnpstwb2VOva6n7qXiwG3FJH6U5ERcyZ01V2EnlUQjJQZSkgfWZNZLj+jaomsB+K4ukb+ThofY9MbFyPjUm5ev1CH3S4X00K+p67TYFwhU4YHOR2bCzCmNKF5otkaciF8kTlOGtLNUoLPkbzbfkDf9I+nnVWi7SqDebZzty0fXo/XmWQ2VxInWaw4u3uM0lNbO4j5FmR/kxGTCWC8kuAGGTogI3u0hcksc0MVElVOCUgQTZ/dmhu93sFntJz6Hwqum56gdiUT1p3uCm6wmWrWyNIw5HSDdsM7uhJXD7Br3kLYYzDNi7XypFCpdjwGlgUoaaqEZj6fTv9mSn9X/AE+/4Lp+u/2Z+F/VP+h+K/s8BPK1c060yy6Db91epfeWqY7ZtoMMNs7cDZeKLuEtrKCz5Y+NyoGprSmUaQJTh1WNrBH8YypmuYhwtwq4OWIufBpIKoPL/jt1hWOpGoN4VM9WjqDf2fNoOknnFp6dyqcbGND4yuse4CEEueQiV2G1xVBuYGnLhqaFfhTwAUJIXRRIIJ+MBEbQ9XH8em8L5ebYqTtjpTWiByx39ck1JQ2RVtJIo1mk5cZuw9XnuEgac6/ZT1viWSb1hXcNvVUzTETRDxQEQDkvnVv0HD7baz2LTHZ7RLfrxC3hhcbvo+a3K2y6ZWW8RM5FyYxYlL2tdrXAAsdwSRBfxeExlQxvmqtiuCiyaQwKp9hHTX7u8v8AfBq77G/9Z/uJ9U+r7n7l+2H6Iep/ad6T6h5D3h9xf5P8/wAx617S/MvM+c/wvAf/2Q==); width: 35px; height: 31px; display: inline-block; margin-right: 18px}
+.footer > .f-content > .logo:after {content: ""; display: inline-block; margin: 12px 0 0 53px; width: 1px; height: 13px; border-right: 1px solid #151515; background: #393939}
+.footer > .f-content > p {display: inline-block; color: #fff; font-size: 12px; margin-left: 20px}

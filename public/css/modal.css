@@ -1,0 +1,9 @@
+.modal-bg {position: fixed; height: 100%; width: 100%; background: #000; opacity: 0.8; z-index: 1; display: none; top: 0; left: 0}
+
+.modal {display: none; color: #fff; top: 100%; width: 594px; padding: 15px; margin: 10% 0 0 -280px; background: #a72f92; border-top: 5px solid #ea59d2; position: absolute; z-index: 2; box-shadow: inset 0px 14px 30px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.3); left: 50%}
+.modal > .m-title {padding: 11px 0 1px 15px; height: 37px; position: relative; font-weight: bold; background: #58194d; border-radius: 2px; margin-bottom: 2px}
+.modal > .m-title > .m-close {background: #a72f92; width: 27px; color: #58194d; border-radius: 2px; height: 35px; cursor: pointer; position: absolute; top: 1px; right: 1px; transition: all 0.3s ease-in}
+.modal > .m-title > .m-close > i {padding: 11px 0 0 10px}
+.modal > .m-title > .m-close:hover {background: #d753c0}
+.modal .m-body {padding: 15px; background: #58194d}
+.modal .m-body > a {font-weight: bold; color: #fff}

@@ -1,11 +1,13 @@
 <?php
-namespace App\Helpers\Steam;
+namespace App\Helpers\Steam\Items;
+
+use App\Models\ItemPrice;
 
 abstract class Item
 {
     public static $contextId;
 
-        /**
+    /**
      * Имя предмета
      * @var string
      */
@@ -92,22 +94,11 @@ abstract class Item
     protected $characters = [];
 
     /**
-     * Минимальная цена
-     * @var float
+     * Высчитывается в классе ItemPrice, задаётся при парсинге в ItemCollection
+     * @see ItemCollection
+     * @var ItemPrice
      */
-    protected $medianPrice;
-
-    /**
-     * Средняя цена
-     * @var float
-     */
-    protected $middlePrice;
-
-    /**
-     * Суммарное количество продаж и покупок предмета на маркете steam
-     * @var int
-     */
-    protected $marketVolume;
+    protected $price;
 
     public function __construct(array $data)
     {
@@ -146,48 +137,6 @@ abstract class Item
 
         if ($data['type'] != '')
             $this->type = $data['type'];
-    }
-
-    /**
-     * @return float
-     */
-    public function getMinPrice() {
-        return $this->medianPrice;
-    }
-
-    /**
-     * @param $price float|int
-     */
-    public function setMinPrice($price) {
-        $this->medianPrice = $price;
-    }
-
-    /**
-     * @return float
-     */
-    public function getMedianPrice() {
-        return $this->medianPrice;
-    }
-
-    /**
-     * @param $price float
-     */
-    public function setMedianPrice($price) {
-        $this->medianPrice = $price;
-    }
-
-    /**
-     * @param $val int
-     */
-    public function setMarketVolume($val) {
-        $this->marketVolume = $val;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMarketVolume() {
-        return $this->marketVolume;
     }
 
     /**
@@ -319,8 +268,27 @@ abstract class Item
         return 'https://steamcommunity-a.akamaihd.net/economy/image/class/' . $this->appId . '/' . $this->classId . '/';
     }
 
-    public function getLotPrice() {
-        return max($this->middlePrice, $this->medianPrice);
+    /**
+     * @return ItemPrice
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param ItemPrice $price
+     */
+    public function setPrice(ItemPrice $price)
+    {
+        $this->price = $price;
+    }
+
+    public function getSitePrice() {
+        if (is_null($this->price))
+            return 0;
+
+        return $this->price->getSitePrice();
     }
 
     abstract public function getRarity();
@@ -330,23 +298,28 @@ abstract class Item
      * Зачем нужно? Ну, чтобы базовый класс Item расширял интерфейс
      */
 
-    static public function sortByRarity($rarityA, $rarityB) {
+    static public function sortByRarity($rarityA, $rarityB)
+    {
         return 0;
     }
 
-    static public function sortByQuality($a, $b) {
+    static public function sortByQuality($a, $b)
+    {
         return 0;
     }
 
-    static public function sortByType($typeA, $typeB) {
+    static public function sortByType($typeA, $typeB)
+    {
         return 0;
     }
 
-    static public function sortByCharacter($characterA, $characterB) {
+    static public function sortByCharacter($characterA, $characterB)
+    {
         return 0;
     }
 
-    static public function sortByPrice($priceA, $priceB) {
+    static public function sortByPrice($priceA, $priceB)
+    {
         return 0;
     }
 }

@@ -9,6 +9,6 @@ return [
     /*
      *  Api Key (http://steamcommunity.com/dev/apikey)
      */
-    'api_key' => 'THIS VALUE IS INHERITED FROM steam-api.php!!!!!!!'
+    'api_key' => '2A6495D052A0768B9AE33E77786D183D'
 
 ];
